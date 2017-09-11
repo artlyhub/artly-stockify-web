@@ -20,6 +20,16 @@ def scramble_uploaded_image(instance, filename):
 class ProfileManager(models.Manager):
     user_for_related_field = True
 
+    def all(self):
+        qs = self.get_queryset().all()
+        # print(dir(self))
+        try:
+            if self.instance:
+                qs = qs.exclude(user=self.instance)
+        except:
+            pass
+        return qs
+
     def toggle_follow(self, username, to_toggle_user):
         profile, created = Profile.objects.get_or_create(user=username)
         if to_toggle_user in profile.following.all():

@@ -55,34 +55,31 @@ class ProfileAPIView(generics.ListCreateAPIView):
 class ProfileDetailsAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
-
-    # def get(self, request, *args, **kwargs):
-    #     print(request.user)
-
-
-class ProfileImageDetailsAPIView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = ProfileImage.objects.all()
-    serializer_class = ProfileImageSerializer
-
-
-class FollowerAPIView(generics.RetrieveAPIView):
-    queryset = Profile.objects.all()
-    serializer_class = FollowerSerializer
-
-
-class FollowerAddAPIView(APIView):
-    serializer_class = FollowerAddSerializer
-
-    def post(self, request, *args, **kwargs):
-        if request.user.is_authenticated():
-            data = request.data
-            serializer = FollowerAddSerializer(data=data)
-            if serializer.is_valid(raise_exception=True):
-                follow = serializer.data['follow']
-                to_toggle_user = User.objects.all().filter(username=follow).first()
-                following = Profile.objects.toggle_follow(request.user, to_toggle_user)
-                if following:
-                    return Response({'status': 'followed'}, status=HTTP_200_OK)
-                else:
-                    return Response({'status': 'unfollowed'}, status=HTTP_200_OK)
-            return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
+#
+#
+# class ProfileImageDetailsAPIView(generics.RetrieveUpdateDestroyAPIView):
+#     queryset = ProfileImage.objects.all()
+#     serializer_class = ProfileImageSerializer
+#
+#
+# class FollowerAPIView(generics.RetrieveAPIView):
+#     queryset = Profile.objects.all()
+#     serializer_class = FollowerSerializer
+#
+#
+# class FollowerAddAPIView(APIView):
+#     serializer_class = FollowerAddSerializer
+#
+#     def post(self, request, *args, **kwargs):
+#         if request.user.is_authenticated():
+#             data = request.data
+#             serializer = FollowerAddSerializer(data=data)
+#             if serializer.is_valid(raise_exception=True):
+#                 follow = serializer.data['follow']
+#                 to_toggle_user = User.objects.all().filter(username=follow).first()
+#                 following = Profile.objects.toggle_follow(request.user, to_toggle_user)
+#                 if following:
+#                     return Response({'status': 'followed'}, status=HTTP_200_OK)
+#                 else:
+#                     return Response({'status': 'unfollowed'}, status=HTTP_200_OK)
+#             return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
