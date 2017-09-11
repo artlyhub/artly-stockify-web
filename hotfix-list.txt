@@ -1,0 +1,1 @@
+1. fixing profile details api view, not seems to be working after adding profile images view
